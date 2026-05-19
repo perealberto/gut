@@ -1,5 +1,16 @@
 import argparse
-from src import gutlib as gl
+import os
+from . import data
+
+
+def main():
+    try:
+        args = parse_arguments()
+        args.func(args)
+    except Exception as e:
+        raise e
+    except KeyboardInterrupt:
+        print("Exiting gut! >:(")
 
 
 def parse_arguments():
@@ -16,22 +27,11 @@ def parse_arguments():
     commands.required = True
 
     init_parser = commands.add_parser("init", help="Initialize repository")
-    init_parser.set_defaults(func=gl.init)
-
-    commands.add_parser("status", help="Prints the current status of the repository")
+    init_parser.set_defaults(func=init)
 
     return parser.parse_args()
 
 
-def main():
-    args = parse_arguments()
-    args.func(args)
-
-
-if __name__ == "__main__":
-    try:
-        main()
-    except Exception as e:
-        raise e
-    except KeyboardInterrupt:
-        print("Exiting program!")
+def init():
+    data.init()
+    print(f"The gut repository has been initialized at {os.getcwd()}/{data.GUT_DIR}")
