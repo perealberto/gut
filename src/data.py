@@ -1,7 +1,16 @@
+import hashlib
 import os
 
 GUT_DIR = ".gut"
 
 
-def init(args):
-    os.mkdir(os.getcwd() + GUT_DIR)
+def init():
+    os.mkdir(GUT_DIR)
+    os.makedirs(f"{GUT_DIR}/objects")
+
+
+def hash_object(data):
+    oid = hashlib.sha1(data).hexdigest()
+    with open(f"{GUT_DIR}/objects/{oid}", "wb") as f:
+        f.write(data)
+    return oid
