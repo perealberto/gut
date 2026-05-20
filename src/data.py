@@ -10,8 +10,8 @@ def init():
     print(f"The gut repository has been initialized at {os.getcwd()}/{GUT_DIR}")
 
 
-def hash_object(data, _type="blob"):
-    obj = _type.encode() + b"\x00" + data
+def hash_object(data, type_="blob"):
+    obj = type_.encode() + b"\x00" + data
     oid = hashlib.sha1(obj).hexdigest()
     with open(f"{GUT_DIR}/objects/{oid}", "wb") as f:
         f.write(obj)
@@ -22,10 +22,10 @@ def get_object(oid, expected=None):
     with open(f"{GUT_DIR}/objects/{oid}", "rb") as f:
         obj = f.read()
 
-    _type, _, content = obj.partition(b"\x00")
-    _type = _type.decode()
+    type_, _, content = obj.partition(b"\x00")
+    type_ = type_.decode()
 
     if expected is not None:
-        assert _type == expected, f"Expected {expected}, got {_type}"
+        assert type_ == expected, f"Expected {expected}, got {type_}"
 
     return content

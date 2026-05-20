@@ -1,6 +1,7 @@
 import argparse
 import sys
 from . import data
+from . import base
 
 
 def main():
@@ -34,6 +35,9 @@ def parse_arguments():
     cat_file_parser.set_defaults(func=cat_file)
     cat_file_parser.add_argument("object")
 
+    write_object_parser = commands.add_parser("write-tree")
+    write_object_parser.set_defaults(func=write_tree)
+
     return parser.parse_args()
 
 
@@ -49,3 +53,7 @@ def hash_object(args):
 def cat_file(args):
     sys.stdout.flush()
     sys.stdout.buffer.write(data.get_object(args.object, expected=None))
+
+
+def write_tree(args):
+    print(base.write_tree())
