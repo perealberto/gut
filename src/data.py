@@ -5,7 +5,7 @@ GUT_DIR = ".gut"
 
 
 def init():
-    os.mkdir(GUT_DIR)
+    os.makedirs(GUT_DIR)
     os.makedirs(f"{GUT_DIR}/objects")
     print(f"The gut repository has been initialized at {os.getcwd()}/{GUT_DIR}")
 
@@ -13,8 +13,8 @@ def init():
 def hash_object(data, type_="blob"):
     obj = type_.encode() + b"\x00" + data
     oid = hashlib.sha1(obj).hexdigest()
-    with open(f"{GUT_DIR}/objects/{oid}", "wb") as f:
-        f.write(obj)
+    with open(f"{GUT_DIR}/objects/{oid}", "wb") as out:
+        out.write(obj)
     return oid
 
 
