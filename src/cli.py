@@ -1,5 +1,4 @@
 import argparse
-import os
 import sys
 from . import data
 
@@ -40,7 +39,6 @@ def parse_arguments():
 
 def init(args):
     data.init()
-    print(f"The gut repository has been initialized at {os.getcwd()}/{data.GUT_DIR}")
 
 
 def hash_object(args):
@@ -50,4 +48,4 @@ def hash_object(args):
 
 def cat_file(args):
     sys.stdout.flush()
-    sys.stdout.buffer.write(data.get_object(args.object))
+    sys.stdout.buffer.write(data.get_object(args.object, expected=None))
