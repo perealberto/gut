@@ -73,5 +73,16 @@ def read_tree(tree_oid):
             f.write(data.get_object(oid))
 
 
+def commit(message):
+    commit = f"tree {write_tree()}\n"
+    commit += "\n"
+    commit += f"{message}\n"
+
+    oid = data.hash_object(commit.encode(), "commit")
+    data.set_HEAD(oid)
+
+    return oid
+
+
 def is_ignored(path):
     return ".gut" in path.split("/")
